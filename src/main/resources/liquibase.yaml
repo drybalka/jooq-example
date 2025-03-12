@@ -1,0 +1,181 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: drybalka
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(255)
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+        - createTable:
+            tableName: contract
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(255)
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: billing
+                  type: VARCHAR(255)
+              - column:
+                  name: customer_id
+                  type: VARCHAR(255)
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(255)
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: brand
+                  type: VARCHAR(255)
+              - column:
+                  name: contract_id
+                  type: VARCHAR(255)
+
+  - changeSet:
+      id: 2
+      author: drybalka
+      changes:
+        - insert:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  value: "cust-001"
+              - column:
+                  name: name
+                  value: "Test Customer GmbH"
+        - insert:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  value: "cust-002"
+              - column:
+                  name: name
+                  value: "Demo User AG"
+        - insert:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  value: "cust-003"
+              - column:
+                  name: name
+                  value: "Inactive Client LLC"
+
+        - insert:
+            tableName: contract
+            columns:
+              - column:
+                  name: id
+                  value: "contr-001"
+              - column:
+                  name: billing
+                  value: "MONTHLY"
+              - column:
+                  name: customer_id
+                  value: "cust-001"
+        - insert:
+            tableName: contract
+            columns:
+              - column:
+                  name: id
+                  value: "contr-002"
+              - column:
+                  name: billing
+                  value: "ANNUAL"
+              - column:
+                  name: customer_id
+                  value: "cust-002"
+        - insert:
+            tableName: contract
+            columns:
+              - column:
+                  name: id
+                  value: "contr-orphan"
+              - column:
+                  name: billing
+                  value: "MONTHLY"
+              - column:
+                  name: customer_id
+                  value: "cust-999"  # non-existent customer
+        - insert:
+            tableName: contract
+            columns:
+              - column:
+                  name: id
+                  value: "contr-empty"
+              - column:
+                  name: billing
+                  value: "PENDING"
+
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: "prod-001"
+              - column:
+                  name: brand
+                  value: "Acme"
+              - column:
+                  name: contract_id
+                  value: "contr-001"
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: "prod-002"
+              - column:
+                  name: brand
+                  value: "Acme"  # duplicate brand
+              - column:
+                  name: contract_id
+                  value: "contr-001"
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: "prod-003"
+              - column:
+                  name: brand
+                  value: "Globex"
+              - column:
+                  name: contract_id
+                  value: "contr-002"
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: "prod-orphan"
+              - column:
+                  name: brand
+                  value: "TestBrand"
+              - column:
+                  name: contract_id
+                  value: "contr-999"  # non-existent contract
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  value: "prod-no-contract"
+              - column:
+                  name: brand
+                  value: "Solo"
+
